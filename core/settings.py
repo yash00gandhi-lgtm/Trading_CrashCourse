@@ -7,13 +7,26 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY
+# ========================
+# 🔐 SECURITY
+# ========================
 SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG") == "True"
+
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY not set in environment")
+
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
-# APPS
+# Fallback to avoid crash
+if not ALLOWED_HOSTS or ALLOWED_HOSTS == ['']:
+    ALLOWED_HOSTS = ["*"]
+
+
+# ========================
+# 📦 APPS
+# ========================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -27,10 +40,13 @@ INSTALLED_APPS = [
     'courses',
 ]
 
-# MIDDLEWARE
+
+# ========================
+# ⚙️ MIDDLEWARE
+# ========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # IMPORTANT
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # static fix
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -39,9 +55,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'core.urls'
 
-# TEMPLATES
+
+# ========================
+# 🎨 TEMPLATES
+# ========================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -57,9 +77,13 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# DATABASE (Render ke liye future ready)
+
+# ========================
+# 🗄 DATABASE
+# ========================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -67,7 +91,10 @@ DATABASES = {
     }
 }
 
-# PASSWORD VALIDATION
+
+# ========================
+# 🔑 PASSWORD VALIDATION
+# ========================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -75,27 +102,48 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# INTERNATIONAL
+
+# ========================
+# 🌍 INTERNATIONAL
+# ========================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# STATIC FILES
+
+# ========================
+# 📁 STATIC FILES
+# ========================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# MEDIA FILES
+# whitenoise (important)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+# ========================
+# 📁 MEDIA FILES
+# ========================
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# RAZORPAY (ENV se lo)
+
+# ========================
+# 💳 RAZORPAY
+# ========================
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
 
-# LOGIN
+
+# ========================
+# 🔐 LOGIN
+# ========================
 LOGIN_URL = '/login/'
 
-# DEFAULT PK
+
+# ========================
+# 🔢 DEFAULT PK
+# ========================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
