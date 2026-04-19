@@ -1,43 +1,104 @@
 CoreV – Trading Academy Platform
 
-CoreV is a full-stack trading academy platform designed to deliver premium course content with secure payments and controlled user access. The goal of this project was to build something that is not just a demo, but actually usable for real clients.
+CoreV is a full-stack web application designed to deliver structured trading education with secure access control, integrated payments, and a clean user experience.
+The platform is built with a focus on real-world usability, scalability, and deployment readiness.
 
-The platform includes a complete authentication system with secure login, signup, and session handling. Users can browse courses, view details, and only access content after purchasing, ensuring proper access control.
+---
 
-Payments are integrated using Razorpay, with order creation, verification, and protection against duplicate purchases. The money flow is designed to go directly to the client’s account.
+Overview
 
-Courses are structured into lessons with smooth navigation between them. The learning experience is kept clean and distraction-free.
+CoreV allows users to browse, purchase, and consume trading courses in a controlled environment.
+Only verified users who have completed payments can access premium content, ensuring content protection and business integrity.
 
-For video delivery, YouTube unlisted videos are used, but direct links are hidden and access is controlled through the backend to prevent misuse.
+---
 
-Security is a key focus in this project. Users must be logged in to access content, payments are verified before unlocking courses, and a watermark system is included for added protection.
+Key Features
 
-A dashboard is provided where users can see their purchased courses and track their activity in a simple and clean interface.
+Authentication System
+Secure user login and session management with protected routes for authenticated access.
 
-The project also includes a contact system with a modern multi-step form. All submitted data is stored in the backend and can be managed through the admin panel.
+Course Management
+Structured course and lesson system with restricted access for unpaid users.
 
-Tech stack used:
-Django for backend
-HTML, CSS, JavaScript for frontend
-Razorpay for payments
-YouTube (unlisted) for video hosting
-Render for deployment
+Payment Integration
+Razorpay-based payment system with order verification and duplicate purchase prevention.
 
-Deployment process is straightforward:
-Push the project to GitHub, connect it to Render, set environment variables, and deploy.
+Learning Experience
+Smooth navigation between lessons with a clean, distraction-free interface.
 
-Required environment variables:
+Video Protection
+Content is delivered using unlisted video sources with backend-controlled access, preventing direct exposure of video URLs.
+
+Dashboard
+Users can track purchased courses and monitor their learning progress through a minimal and intuitive dashboard.
+
+Contact System
+A multi-step, animated contact form integrated with the backend and accessible via the admin panel.
+
+---
+
+Tech Stack
+
+Backend: Django
+Frontend: HTML, CSS, JavaScript
+Payments: Razorpay
+Video Hosting: YouTube (Unlisted)
+Deployment: Render
+
+---
+
+Project Structure
+
+core/        → Project configuration
+accounts/    → Authentication logic
+courses/     → Course and lesson management
+payments/    → Payment handling and verification
+templates/   → Frontend templates
+static/      → Static assets
+
+---
+
+Environment Configuration
+
+The project uses environment variables for sensitive data and configuration.
+
+Required variables:
+
 SECRET_KEY
 DEBUG
+ALLOWED_HOSTS
 RAZORPAY_KEY_ID
 RAZORPAY_KEY_SECRET
 
-Important notes:
-Test keys do not process real payments. Always switch to live keys before going to production. Secret keys should never be exposed in frontend code.
+---
 
-Project status:
-Production ready
-Client demo ready
-Deployment ready
+Deployment
 
-This project reflects practical full-stack development skills and focuses on building something usable in real-world scenarios.
+The application is deployed using Render.
+
+Steps:
+
+1. Push code to GitHub
+2. Connect repository to Render
+3. Configure environment variables
+4. Build and deploy
+
+---
+
+Notes
+
+The free deployment tier is suitable for demonstration purposes.
+For production use, it is recommended to use a paid instance along with a persistent database setup.
+
+---
+
+Status
+
+The platform is fully functional and deployment-ready.
+It can be directly used for client demonstration and further scaled for production usage.
+
+---
+
+Author
+
+Developed with a focus on practical implementation, real-world deployment, and clean architecture.
