@@ -1,27 +1,17 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
-
-# Load env variables
-load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ========================
 # 🔐 SECURITY
 # ========================
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-if not SECRET_KEY:
-    raise ValueError("SECRET_KEY not set in environment")
+DEBUG = os.environ.get("DEBUG") == "True"
 
-DEBUG = os.getenv("DEBUG", "False") == "True"
-
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
-
-# Fallback to avoid crash
-if not ALLOWED_HOSTS or ALLOWED_HOSTS == ['']:
-    ALLOWED_HOSTS = ["*"]
+# SIMPLE & SAFE (no crash)
+ALLOWED_HOSTS = ["*"]
 
 
 # ========================
@@ -46,7 +36,7 @@ INSTALLED_APPS = [
 # ========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # static fix
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -93,17 +83,6 @@ DATABASES = {
 
 
 # ========================
-# 🔑 PASSWORD VALIDATION
-# ========================
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
-
-# ========================
 # 🌍 INTERNATIONAL
 # ========================
 LANGUAGE_CODE = 'en-us'
@@ -117,9 +96,8 @@ USE_TZ = True
 # ========================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# whitenoise (important)
+# VERY IMPORTANT (fix static crash)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
@@ -133,8 +111,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # ========================
 # 💳 RAZORPAY
 # ========================
-RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
-RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
+RAZORPAY_KEY_ID = os.environ.get("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET = os.environ.get("RAZORPAY_KEY_SECRET")
 
 
 # ========================
