@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CoreV Trading Academy — Contact</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --gold-border: rgba(201,168,76,0.3);
+    --bg: #050810;
+    --bg-mid: #080d1a;
+    --bg-card: rgba(8,14,30,0.85);
+    --navy: #0a1628;
+    --navy-light: #0f1e3a;
+    --text: #e8e4d8;
+    --text-dim: #8a8878;
+    --text-muted: #4a4840;
+    --glass: rgba(255,255,255,0.03);
+    --glass-border: rgba(255,255,255,0.07);
+    --success: #2ecc71;
+    --error: #e74c3c;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ═══ CUSTOM CURSOR ═══ */
+  #cursor {
+    position: fixed; top: 0; left: 0;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  #cursor-ring {
+    position: fixed; top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--gold-light);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.2s ease, height 0.2s ease, border-color 0.2s;
+    opacity: 0.6;
+  }
+  body:has(a:hover, button:hover, .tag:hover, .contact-item:hover) #cursor-ring {
+    width: 56px; height: 56px;
+    border-color: var(--gold);
+    opacity: 1;
+  }
+
+  /* ═══ ANIMATED BACKGROUND GRID ═══ */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  /* ═══ NOISE OVERLAY ═══ */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ═══ LAYOUT ═══ */
+  .page-wrap {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ═══ NAV ═══ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(5,8,16,0.95), transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-mark {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 0 20px rgba(201,168,76,0.4);
+  }
+  .nav-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+  .nav-logo-text span {
+    color: var(--gold);
+  }
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0; right: 0; height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.25s ease;
+    transform-origin: left;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.3s ease forwards;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 40px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .hero-eyebrow::after {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+
+  .hero-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+  .hero-heading .gold-italic {
+    color: var(--gold-light);
+    font-style: italic;
+    position: relative;
+    display: inline-block;
+  }
+  .hero-heading .gold-italic::after {
+    content: '';
+    position: absolute; bottom: 6px; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, var(--gold), var(--gold-light), transparent);
+    border-radius: 2px;
+    animation: lineGrow 0.8s 1.2s ease forwards;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 44px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s ease forwards;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s ease forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 34px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #0a0a0a;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--gold-light), #fff8e1);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(201,168,76,0.5); }
+  .btn-primary:hover::before { opacity: 1; }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 34px;
+    background: transparent;
+    color: var(--gold-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gold-border);
+    cursor: none;
+    transition: all 0.25s ease;
+  }
+  .btn-ghost:hover {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    box-shadow: 0 0 24px rgba(201,168,76,0.15);
+  }
+
+  /* scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.4s ease forwards;
+  }
+  .scroll-hint span {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ═══ TRUST STRIP ═══ */
+  .trust-strip {
+    padding: 0 60px 80px;
+  }
+  .trust-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--glass-border);
+    backdrop-filter: blur(10px);
+  }
+  .trust-item {
+    background: var(--glass);
+    padding: 36px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+  .trust-item::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(201,168,76,0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .trust-item:hover { background: rgba(201,168,76,0.04); }
+  .trust-item:hover::before { opacity: 1; }
+  .trust-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .trust-label {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+  .trust-icon {
+    font-size: 20px;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+
+  /* ═══ CONTACT SECTION ═══ */
+  .contact-section {
+    padding: 20px 60px 100px;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+  }
+  .section-title em {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 32px;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ═══ LEFT — INFO PANEL ═══ */
+  .info-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 44px 36px;
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+  .info-panel::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.5;
+  }
+  .info-panel::after {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(201,168,76,0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  .info-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .info-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  .contact-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 36px; }
+
+  .contact-item {
+    display: flex; align-items: center; gap: 18px;
+    padding: 16px 18px;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+    cursor: none;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-item::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--gold-dim);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .contact-item:hover {
+    border-color: var(--gold-border);
+    transform: translateX(4px);
+  }
+  .contact-item:hover::before { opacity: 1; }
+
+  .contact-icon {
+    width: 42px; height: 42px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+    transition: box-shadow 0.25s;
+  }
+  .contact-item:hover .contact-icon {
+    box-shadow: 0 0 16px rgba(201,168,76,0.3);
+  }
+  .contact-info { position: relative; z-index: 1; }
+  .contact-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .contact-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .response-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 18px;
+    background: rgba(46,204,113,0.06);
+    border: 1px solid rgba(46,204,113,0.2);
+    border-radius: 100px;
+    font-size: 12px;
+    color: #5ee89a;
+    font-weight: 500;
+  }
+  .badge-dot {
+    width: 7px; height: 7px;
+    background: #2ecc71;
+    border-radius: 50%;
+    animation: pulse-green 2s infinite;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--glass-border), transparent);
+    margin: 28px 0;
+  }
+
+  .social-row {
+    display: flex; gap: 10px;
+  }
+  .social-btn {
+    width: 40px; height: 40px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    text-decoration: none;
+    color: var(--text-dim);
+    transition: all 0.2s ease;
+    cursor: none;
+  }
+  .social-btn:hover {
+    border-color: var(--gold-border);
+    color: var(--gold-light);
+    background: var(--gold-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(201,168,76,0.2);
+  }
+
+  /* ═══ RIGHT — FORM PANEL ═══ */
+  .form-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 44px 40px;
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+  .form-panel::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.5;
+  }
+
+  /* STEP INDICATOR */
+  .step-indicator {
+    display: flex; align-items: center;
+    margin-bottom: 36px;
+  }
+  .step-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    background: var(--bg);
+  }
+  .step-dot.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    box-shadow: 0 0 16px rgba(201,168,76,0.3);
+  }
+  .step-dot.done {
+    border-color: var(--success);
+    background: var(--success);
+    color: #fff;
+  }
+  .step-line {
+    flex: 1;
+    height: 1px;
+    background: var(--glass-border);
+    margin: 0 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .step-line-fill {
+    position: absolute; inset-y: 0; left: 0;
+    background: linear-gradient(to right, var(--gold), var(--gold-light));
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  .step-line-fill.done { width: 100%; }
+
+  .step-label-row {
+    display: flex; justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .step-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .step-label.active { color: var(--gold); }
+
+  /* FORM STEPS */
+  .form-step {
+    display: none;
+    animation: slideIn 0.4s ease forwards;
+  }
+  .form-step.active { display: block; }
+
+  /* FLOATING LABEL FIELDS */
+  .field-group { position: relative; margin-bottom: 20px; }
+  .field-group input,
+  .field-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 20px 16px 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    -webkit-appearance: none;
+  }
+  .field-group textarea {
+    resize: none;
+    height: 130px;
+    padding-top: 22px;
+    line-height: 1.6;
+  }
+  .field-group input:focus,
+  .field-group textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1), 0 0 20px rgba(201,168,76,0.05);
+    background: rgba(201,168,76,0.03);
+  }
+  .field-group label {
+    position: absolute;
+    top: 50%; left: 16px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    font-weight: 400;
+  }
+  .field-group textarea ~ label { top: 18px; transform: none; }
+  .field-group input:focus ~ label,
+  .field-group input:not(:placeholder-shown) ~ label,
+  .field-group textarea:focus ~ label,
+  .field-group textarea:not(:placeholder-shown) ~ label {
+    top: 8px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+    transform: none;
+  }
+  .field-group textarea:focus ~ label,
+  .field-group textarea:not(:placeholder-shown) ~ label {
+    top: 6px;
+  }
+  .field-group input::placeholder,
+  .field-group textarea::placeholder { color: transparent; }
+
+  .field-group.error input,
+  .field-group.error textarea {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px rgba(231,76,60,0.1);
+  }
+  .field-group.error label { color: var(--error); }
+  .error-msg {
+    display: none;
+    font-size: 11px;
+    color: var(--error);
+    margin-top: 5px;
+    padding-left: 4px;
+    font-family: 'Space Mono', monospace;
+  }
+  .field-group.error .error-msg { display: block; }
+
+  /* SUBJECT TAGS */
+  .tags-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .tags-grid {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 8px;
+  }
+  .tag {
+    padding: 10px 20px;
+    border-radius: 100px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    font-size: 13px;
+    color: var(--text-dim);
+    cursor: none;
+    transition: all 0.2s ease;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .tag::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--gold-dim), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .tag:hover {
+    border-color: var(--gold-border);
+    color: var(--text);
+  }
+  .tag:hover::before { opacity: 1; }
+  .tag.selected {
+    border-color: var(--gold);
+    background: var(--gold-dim);
+    color: var(--gold-light);
+    box-shadow: 0 0 16px rgba(201,168,76,0.15);
+  }
+  .tag.selected::before { opacity: 1; }
+
+  .char-counter {
+    text-align: right;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    transition: color 0.2s;
+  }
+  .char-counter.warn { color: var(--gold); }
+  .char-counter.limit { color: var(--error); }
+
+  /* FORM NAV BUTTONS */
+  .form-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 28px;
+  }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    cursor: none;
+    transition: all 0.2s ease;
+  }
+  .btn-back:hover { border-color: var(--gold-border); color: var(--gold-light); }
+
+  .btn-next {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #0a0a0a;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+    letter-spacing: 0.03em;
+  }
+  .btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,168,76,0.45);
+  }
+  .btn-next:active { transform: translateY(0); }
+
+  /* Submit button inherits btn-next */
+  button[type="submit"].btn-next {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 32px;
+    font-size: 15px;
+  }
+
+  /* ═══ SUCCESS STATE ═══ */
+  .success-panel {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .success-panel.show { display: block; }
+  .success-checkmark {
+    width: 72px; height: 72px;
+    background: rgba(46,204,113,0.1);
+    border: 1.5px solid rgba(46,204,113,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 24px;
+    animation: successPop 0.5s 0.2s ease both;
+  }
+  .success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .success-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 320px;
+    margin: 0 auto 28px;
+  }
+
+  /* ═══ FOOTER BAR ═══ */
+  .footer-bar {
+    border-top: 1px solid var(--glass-border);
+    padding: 28px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--glass);
+  }
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  .footer-gold { color: var(--gold); }
+  .footer-links {
+    display: flex; gap: 24px;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    cursor: none;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ═══ KEYFRAMES ═══ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes lineGrow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.1); }
+  }
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(46,204,113,0.4); }
+    50%       { box-shadow: 0 0 0 6px rgba(46,204,113,0); }
+  }
+  @keyframes successPop {
+    0%   { transform: scale(0.5); opacity: 0; }
+    60%  { transform: scale(1.15); }
+    100% { transform: scale(1);   opacity: 1; }
+  }
+  @keyframes candleTick {
+    0%,100% { height: var(--h1); }
+    50%      { height: var(--h2); }
+  }
+  @keyframes gridFade {
+    0%, 100% { opacity: 0.3; }
+    50%       { opacity: 0.6; }
+  }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 1024px) {
+    nav { padding: 18px 32px; }
+    .trust-strip, .contact-section { padding-left: 32px; padding-right: 32px; }
+    .footer-bar { padding: 24px 32px; }
+  }
+  @media (max-width: 820px) {
+    .nav-links { display: none; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .trust-inner { grid-template-columns: repeat(2, 1fr); }
+    .hero-heading { font-size: clamp(42px, 10vw, 72px); }
+  }
+  @media (max-width: 560px) {
+    nav { padding: 16px 20px; }
+    .trust-strip, .contact-section { padding-left: 16px; padding-right: 16px; }
+    .form-panel, .info-panel { padding: 28px 20px; }
+    .trust-inner { grid-template-columns: repeat(2, 1fr); }
+    .footer-bar { flex-direction: column; gap: 16px; text-align: center; }
+    body { cursor: auto; }
+    #cursor, #cursor-ring { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ANIMATED CANVAS BG -->
+<canvas id="bg-canvas"></canvas>
+
+<div class="page-wrap">
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">CV</div>
+      <span class="nav-logo-text">Core<span>V</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/courses/">Courses</a></li>
+      <!-- <li><a href="">Logout</a></li> -->
+      <li><a href="/dashboard/">Dashboard</a></li>
+    </ul>
+    <a href="/logout/" class="btn-primary" style="padding:11px 22px;font-size:13px;">
+      <span>Logout</span>
+    </a>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <p class="hero-eyebrow">CoreV Trading Academy</p>
+    <h1 class="hero-heading">
+      Talk Less.<br>
+      <span class="gold-italic">Trade Better.</span>
+    </h1>
+    <p class="hero-sub">Have doubts? Need clarity? We're here to guide serious traders on every step of their journey.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary"><span>✉ Send Message</span></a>
+      <a href="/courses/" class="btn-ghost">View Courses →</a>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══ TRUST STRIP ═══ -->
+  <section class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <div class="trust-icon">👥</div>
+        <div class="trust-num">1000+</div>
+        <div class="trust-label">Students Mentored</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">⭐</div>
+        <div class="trust-num">90%+</div>
+        <div class="trust-label">Satisfaction Rate</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">📈</div>
+        <div class="trust-num">5+ Yrs</div>
+        <div class="trust-label">Live Experience</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🎯</div>
+        <div class="trust-num">Live</div>
+        <div class="trust-label">1-on-1 Mentorship</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT SECTION ═══ -->
+  <section class="contact-section" id="contact">
+    <div class="section-header">
+      <span class="section-tag">// get in touch</span>
+      <h2 class="section-title">We're One Message <em>Away</em></h2>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- LEFT: INFO -->
+      <div class="info-panel">
+        <h3 class="info-heading">Reach Out Directly</h3>
+        <p class="info-sub">Our team responds swiftly. Use any channel that works for you — we're available across all platforms.</p>
+
+        <div class="contact-items">
+          <a href="mailto:support@corevacademy.com" class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div class="contact-info">
+              <span class="contact-label">Email</span>
+              <span class="contact-value">support@corevacademy.com</span>
+            </div>
+          </a>
+          <a href="https://wa.me/919999999999" class="contact-item">
+            <div class="contact-icon">📱</div>
+            <div class="contact-info">
+              <span class="contact-label">WhatsApp</span>
+              <span class="contact-value">+91 99999 99999</span>
+            </div>
+          </a>
+          <a href="https://t.me/corevacademy" class="contact-item">
+            <div class="contact-icon">✈️</div>
+            <div class="contact-info">
+              <span class="contact-label">Telegram</span>
+              <span class="contact-value">@corevacademy</span>
+            </div>
+          </a>
+          <a href="https://instagram.com/corevacademy" class="contact-item">
+            <div class="contact-icon">📸</div>
+            <div class="contact-info">
+              <span class="contact-label">Instagram</span>
+              <span class="contact-value">@corevacademy</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="response-badge">
+          <div class="badge-dot"></div>
+          Replies within 2 hours
+        </div>
+
+        <div class="divider"></div>
+
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;letter-spacing:0.05em;font-family:'Space Mono',monospace;text-transform:uppercase;">Follow Us</p>
+        <div class="social-row">
+          <a href="#" class="social-btn" title="YouTube">▶</a>
+          <a href="#" class="social-btn" title="Twitter/X">𝕏</a>
+          <a href="#" class="social-btn" title="Telegram">✈</a>
+          <a href="#" class="social-btn" title="Instagram">◉</a>
+          <a href="#" class="social-btn" title="WhatsApp">◈</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="form-panel">
+        <!-- STEP INDICATOR -->
+        <div class="step-indicator">
+          <div class="step-dot active" id="dot-1">1</div>
+          <div class="step-line"><div class="step-line-fill" id="line-1"></div></div>
+          <div class="step-dot" id="dot-2">2</div>
+          <div class="step-line"><div class="step-line-fill" id="line-2"></div></div>
+          <div class="step-dot" id="dot-3">3</div>
+        </div>
+        <div class="step-label-row">
+          <span class="step-label active" id="label-1">Your Details</span>
+          <span class="step-label" id="label-2">Subject</span>
+          <span class="step-label" id="label-3">Message</span>
+        </div>
+
+        <!-- DJANGO FORM WRAPPER -->
+        <form method="POST" id="contactForm">
+          {% csrf_token %}
+
+          <!-- HIDDEN subject input synced with tags -->
+          <input type="hidden" name="subject" id="subjectHidden" value="">
+
+          <!-- ── STEP 1 ── -->
+          <div class="form-step active" id="step-1">
+            <div class="field-group" id="fg-name">
+              <input type="text" name="name" id="nameInput" placeholder="Full Name" autocomplete="off">
+              <label for="nameInput">Full Name</label>
+              <div class="error-msg">Please enter your full name</div>
+            </div>
+            <div class="field-group" id="fg-phone">
+              <input type="tel" name="phone" id="phoneInput" placeholder="Phone" autocomplete="off">
+              <label for="phoneInput">Phone Number</label>
+              <div class="error-msg">Enter a valid 10-digit number</div>
+            </div>
+            <div class="field-group" id="fg-email">
+              <input type="email" name="email" id="emailInput" placeholder="Email" autocomplete="off">
+              <label for="emailInput">Email Address</label>
+              <div class="error-msg">Enter a valid email address</div>
+            </div>
+            <div class="form-nav">
+              <div></div>
+              <button type="button" class="btn-next" onclick="goStep(2)">Continue <span>→</span></button>
+            </div>
+          </div>
+
+          <!-- ── STEP 2 ── -->
+          <div class="form-step" id="step-2">
+            <span class="tags-label">What can we help with?</span>
+            <div class="tags-grid">
+              <div class="tag" onclick="selectTag(this, 'Course Query')">📚 Course Query</div>
+              <div class="tag" onclick="selectTag(this, 'Payment Issue')">💳 Payment Issue</div>
+              <div class="tag" onclick="selectTag(this, 'Technical Issue')">⚙️ Technical Issue</div>
+              <div class="tag" onclick="selectTag(this, 'Mentorship')">🎯 Mentorship</div>
+              <div class="tag" onclick="selectTag(this, 'Other')">💬 Other</div>
+            </div>
+            <div class="error-msg" id="tag-error" style="display:none;padding-left:0;margin-top:8px;">Please select a subject</div>
+            <div class="form-nav">
+              <button type="button" class="btn-back" onclick="goStep(1)">← Back</button>
+              <button type="button" class="btn-next" onclick="goStep(3)">Continue <span>→</span></button>
+            </div>
+          </div>
+
+          <!-- ── STEP 3 ── -->
+          <div class="form-step" id="step-3">
+            <div class="field-group" id="fg-message">
+              <textarea name="message" id="messageInput" placeholder="Message" maxlength="500" oninput="countChars(this)"></textarea>
+              <label for="messageInput">Your Message</label>
+              <div class="char-counter" id="charCount">0 / 500</div>
+              <div class="error-msg">Please write your message (min 10 chars)</div>
+            </div>
+            <div class="form-nav" style="flex-direction:column;gap:12px;">
+              <button type="submit" class="btn-next" style="width:100%;justify-content:center;">
+                ✦ Send Message
+              </button>
+              <button type="button" class="btn-back" onclick="goStep(2)" style="width:100%;justify-content:center;">← Back</button>
+            </div>
+          </div>
+
+        </form>
+
+        <!-- SUCCESS PANEL (shown after JS intercept for demo; real form will POST) -->
+        {% if success %}
+<div class="success-panel show">
+{% else %}
+<div class="success-panel" id="successPanel">
+{% endif %}
+          <div class="success-checkmark">✓</div>
+          <h3 class="success-title">Message Sent!</h3>
+          <p class="success-sub">Thank you for reaching out. Our team will get back to you within 2 hours.</p>
+          <a href="#" class="btn-primary" onclick="resetForm(); return false;"><span>Send Another</span></a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer-bar">
+    <span class="footer-copy">© 2025 <span class="footer-gold">CoreV</span> Trading Academy. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+      <a href="#">Refund Policy</a>
+    </div>
+  </footer>
+
+</div><!-- /page-wrap -->
+
+<script>
+/* ═══════════════════════════════════════
+   CURSOR
+════════════════════════════════════════ */
+const cursor     = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top  = mouseY + 'px';
+});
+function animRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top  = ringY + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+/* ═══════════════════════════════════════
+   CANVAS — TRADING GRID + CANDLES
+════════════════════════════════════════ */
+const canvas = document.getElementById('bg-canvas');
+const ctx    = canvas.getContext('2d');
+let W, H;
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Generate random candle data
+function randCandles(n) {
+  const arr = [];
+  let price = 300;
+  for (let i = 0; i < n; i++) {
+    const open   = price;
+    const change = (Math.random() - 0.48) * 18;
+    const close  = open + change;
+    const high   = Math.max(open, close) + Math.random() * 10;
+    const low    = Math.min(open, close) - Math.random() * 10;
+    price = close;
+    arr.push({ open, close, high, low });
+  }
+  return arr;
+}
+
+let candles = randCandles(60);
+let offset  = 0;
+
+function drawGrid() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Draw grid lines
+  ctx.strokeStyle = 'rgba(201,168,76,0.06)';
+  ctx.lineWidth = 0.5;
+  const step = 60;
+  for (let x = 0; x < W; x += step) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (let y = 0; y < H; y += step) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  // Draw candles
+  const cW   = 16;
+  const cGap = 10;
+  const total = cW + cGap;
+  const num   = Math.ceil(W / total) + 2;
+  const baseY = H * 0.75;
+  const scale = 1.6;
+
+  for (let i = 0; i < num; i++) {
+    const idx = (i + Math.floor(offset / total)) % candles.length;
+    const c   = candles[idx];
+    const x   = i * total - (offset % total) + 40;
+    const bullish = c.close >= c.open;
+    const color   = bullish ? 'rgba(46,204,113,0.5)' : 'rgba(231,76,60,0.45)';
+
+    const oY = baseY - (c.open  * scale * 0.1);
+    const cY = baseY - (c.close * scale * 0.1);
+    const hY = baseY - (c.high  * scale * 0.1);
+    const lY = baseY - (c.low   * scale * 0.1);
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth   = 1;
+    ctx.beginPath();
+    ctx.moveTo(x + cW/2, hY);
+    ctx.lineTo(x + cW/2, lY);
+    ctx.stroke();
+
+    ctx.fillStyle = color;
+    ctx.fillRect(x, Math.min(oY, cY), cW, Math.max(2, Math.abs(oY - cY)));
+  }
+
+  // Moving average line
+  ctx.strokeStyle = 'rgba(201,168,76,0.18)';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([4, 6]);
+  ctx.beginPath();
+  for (let i = 0; i < num; i++) {
+    const idx = (i + Math.floor(offset / total)) % candles.length;
+    const c   = candles[idx];
+    const x   = i * total - (offset % total) + 40 + cW/2;
+    const y   = baseY - ((c.open + c.close) / 2 * scale * 0.1);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  offset += 0.4;
+  requestAnimationFrame(drawGrid);
+}
+drawGrid();
+
+/* ═══════════════════════════════════════
+   MULTI-STEP FORM
+════════════════════════════════════════ */
+let currentStep = 1;
+
+function goStep(n) {
+  if (n > currentStep && !validateStep(currentStep)) return;
+
+  // Update dots
+  for (let i = 1; i <= 3; i++) {
+    const dot   = document.getElementById('dot-' + i);
+    const label = document.getElementById('label-' + i);
+    dot.classList.remove('active', 'done');
+    label.classList.remove('active');
+    if (i < n)  { dot.classList.add('done'); dot.textContent = '✓'; }
+    if (i === n) { dot.classList.add('active'); label.classList.add('active'); dot.textContent = i; }
+    if (i > n)  { dot.textContent = i; }
+  }
+  // Lines
+  document.getElementById('line-1').classList.toggle('done', n > 1);
+  document.getElementById('line-2').classList.toggle('done', n > 2);
+
+  // Steps
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step-' + n).classList.add('active');
+}
+
+function validateStep(step) {
+  if (step === 1) {
+    let ok = true;
+    const name  = document.getElementById('nameInput');
+    const phone = document.getElementById('phoneInput');
+    const email = document.getElementById('emailInput');
+
+    clearError('fg-name'); clearError('fg-phone'); clearError('fg-email');
+
+    if (!name.value.trim() || name.value.trim().length < 2) { setError('fg-name'); ok = false; }
+    if (!phone.value.trim() || !/^[\d\s\+\-]{7,15}$/.test(phone.value.trim())) { setError('fg-phone'); ok = false; }
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { setError('fg-email'); ok = false; }
+
+    return ok;
+  }
+  if (step === 2) {
+    const val = document.getElementById('subjectHidden').value;
+    const err = document.getElementById('tag-error');
+    if (!val) { err.style.display = 'block'; return false; }
+    err.style.display = 'none';
+    return true;
+  }
+  if (step === 3) {
+    const msg = document.getElementById('messageInput');
+    clearError('fg-message');
+    if (!msg.value.trim() || msg.value.trim().length < 10) { setError('fg-message'); return false; }
+    return true;
+  }
+  return true;
+}
+
+function setError(id)   { document.getElementById(id).classList.add('error'); }
+function clearError(id) { document.getElementById(id).classList.remove('error'); }
+
+function selectTag(el, val) {
+  document.querySelectorAll('.tag').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('subjectHidden').value = val;
+  document.getElementById('tag-error').style.display = 'none';
+}
+
+function countChars(el) {
+  const n = el.value.length;
+  const counter = document.getElementById('charCount');
+  counter.textContent = n + ' / 500';
+  counter.classList.remove('warn','limit');
+  if (n > 400) counter.classList.add('warn');
+  if (n >= 490) counter.classList.add('limit');
+  clearError('fg-message');
+}
+
+/* FORM SUBMIT — shows success animation; real Django POST still fires */
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  if (!validateStep(3)) {
+    e.preventDefault();
+    return;
+  }
+  // Let Django handle submit
+});
+
+function resetForm() {
+  document.getElementById('contactForm').reset();
+  document.getElementById('contactForm').style.display = '';
+  document.querySelector('.step-indicator').style.display = '';
+  document.querySelector('.step-label-row').style.display = '';
+  document.getElementById('successPanel').classList.remove('show');
+  document.getElementById('subjectHidden').value = '';
+  document.querySelectorAll('.tag').forEach(t => t.classList.remove('selected'));
+  currentStep = 1;
+  goStep(1);
+  // Reset dots
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById('dot-' + i);
+    dot.textContent = i;
+    dot.classList.remove('done','active');
+    if (i === 1) dot.classList.add('active');
+  }
+  document.getElementById('line-1').classList.remove('done');
+  document.getElementById('line-2').classList.remove('done');
+  ['label-1','label-2','label-3'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    el.classList.toggle('active', i === 0);
+  });
+  document.getElementById('charCount').textContent = '0 / 500';
+  ['fg-name','fg-phone','fg-email','fg-message'].forEach(clearError);
+}
+
+/* INTERSECTION OBSERVER — reveal on scroll */
+const observerOpts = { threshold: 0.15 };
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, observerOpts);
+
+document.querySelectorAll('.trust-item, .info-panel, .form-panel').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(30px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

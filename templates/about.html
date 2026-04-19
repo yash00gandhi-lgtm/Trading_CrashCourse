@@ -1,0 +1,1167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About CoreV — Our Philosophy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:       #03040a;
+      --void:        #06080f;
+      --surface:     #0b0d16;
+      --surface2:    #10131f;
+      --gold:        #c9a84c;
+      --gold-dim:    #9a7d35;
+      --gold-faint:  rgba(201,168,76,0.07);
+      --gold-glow:   rgba(201,168,76,0.18);
+      --teal:        #2dd4bf;
+      --teal-dim:    rgba(45,212,191,0.10);
+      --text:        #e8e4d9;
+      --text-muted:  #7a7565;
+      --text-faint:  #3a3830;
+      --border:      rgba(201,168,76,0.12);
+      --border-dim:  rgba(201,168,76,0.06);
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', sans-serif;
+      --mono:        'Space Mono', monospace;
+      --ease-luxury: cubic-bezier(0.25, 0.1, 0.0, 1.0);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 5vw;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-dim);
+      background: rgba(3,4,10,0.82);
+      backdrop-filter: blur(18px) saturate(140%);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-left: 0.4rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s var(--ease-luxury);
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      padding: 0.55rem 1.4rem;
+      text-decoration: none;
+      transition: all 0.3s var(--ease-luxury);
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+
+    .nav-cta:hover { background: #e0bc5a; box-shadow: 0 0 24px rgba(201,168,76,0.35); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 180px 5vw 100px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-dim);
+    }
+
+    .page-header-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 70% 80% at 20% 50%, black 30%, transparent 80%);
+    }
+
+    .page-header-glow {
+      position: absolute;
+      top: 0; right: -20%;
+      width: 700px; height: 100%;
+      background: radial-gradient(ellipse at right, rgba(201,168,76,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .page-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: end;
+    }
+
+    .page-header-left {}
+
+    .page-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-luxury) 0.3s forwards;
+    }
+
+    .page-eyebrow::after {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--gold-dim);
+    }
+
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 600;
+      line-height: 1.0;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 1.1s var(--ease-luxury) 0.5s forwards;
+    }
+
+    .page-title em {
+      font-style: italic;
+      color: var(--gold);
+      display: block;
+    }
+
+    .page-header-right {
+      padding-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-luxury) 0.8s forwards;
+    }
+
+    .page-header-right p {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* ── SHARED LAYOUT ── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 5vw;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 40px;
+      height: 1px;
+      background: var(--gold-dim);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    /* ── PHILOSOPHY ── */
+    .philosophy {
+      padding: 8rem 5vw;
+      background: var(--black);
+    }
+
+    .philosophy-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 7rem;
+      align-items: start;
+    }
+
+    .philosophy-left {
+      position: sticky;
+      top: 100px;
+    }
+
+    .philosophy-body p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .philosophy-body p strong {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .philosophy-body p:first-child {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    .pull-quote {
+      margin: 3rem 0;
+      padding: 2rem 2.5rem;
+      border-left: 2px solid var(--gold-dim);
+      background: var(--gold-faint);
+    }
+
+    .pull-quote p {
+      font-family: var(--serif);
+      font-size: 1.2rem !important;
+      font-style: italic;
+      color: var(--text) !important;
+      line-height: 1.6 !important;
+    }
+
+    /* ── WHY COREV EXISTS ── */
+    .why-section {
+      background: var(--void);
+      border-top: 1px solid var(--border-dim);
+      border-bottom: 1px solid var(--border-dim);
+      padding: 8rem 5vw;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .why-section::after {
+      content: '∴';
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22rem;
+      font-family: var(--serif);
+      color: rgba(201,168,76,0.025);
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .why-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      margin-top: 4rem;
+    }
+
+    .why-card {
+      background: var(--black);
+      border: 1px solid var(--border-dim);
+      padding: 2.5rem;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s var(--ease-luxury);
+    }
+
+    .why-card:hover {
+      border-color: rgba(201,168,76,0.18);
+      transform: translateY(-4px);
+    }
+
+    .why-card-num {
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      font-weight: 600;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(180deg, var(--gold-dim) 0%, rgba(154,125,53,0.2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .why-card h4 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .why-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    /* ── NO-BS APPROACH ── */
+    .approach-section {
+      padding: 8rem 5vw;
+      background: var(--black);
+    }
+
+    .approach-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .approach-table {
+      margin-top: 4rem;
+      border: 1px solid var(--border-dim);
+      overflow: hidden;
+    }
+
+    .approach-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border-dim);
+    }
+
+    .approach-row:last-child { border-bottom: none; }
+
+    .approach-row-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--void);
+      border-bottom: 1px solid var(--border-dim);
+    }
+
+    .approach-col {
+      padding: 1.5rem 2rem;
+      border-right: 1px solid var(--border-dim);
+    }
+
+    .approach-col:last-child { border-right: none; }
+
+    .approach-col-header {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .approach-col-header.not {
+      color: #e05a5a;
+    }
+
+    .approach-col-header.yes {
+      color: var(--gold-dim);
+    }
+
+    .approach-item {
+      padding: 1.4rem 2rem;
+      border-right: 1px solid var(--border-dim);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .approach-item:last-child { border-right: none; }
+
+    .approach-item .dot {
+      flex-shrink: 0;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      margin-top: 0.45em;
+    }
+
+    .approach-item.not .dot { background: rgba(224,90,90,0.5); }
+    .approach-item.yes .dot { background: var(--gold-dim); }
+
+    /* ── WHO IT'S FOR ── */
+    .for-section {
+      background: var(--void);
+      border-top: 1px solid var(--border-dim);
+      border-bottom: 1px solid var(--border-dim);
+      padding: 8rem 5vw;
+    }
+
+    .for-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .for-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 4rem;
+    }
+
+    .for-panel {
+      padding: 3rem;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .for-panel.yes-panel {
+      border-color: var(--border);
+      background: linear-gradient(135deg, var(--gold-faint) 0%, transparent 50%);
+    }
+
+    .for-panel.no-panel {
+      border-color: rgba(224,90,90,0.1);
+      background: linear-gradient(135deg, rgba(224,90,90,0.03) 0%, transparent 50%);
+    }
+
+    .for-panel-tag {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      padding: 0.35rem 0.8rem;
+      display: inline-block;
+    }
+
+    .for-panel.yes-panel .for-panel-tag {
+      color: var(--gold-dim);
+      border: 1px solid var(--border);
+      background: var(--gold-faint);
+    }
+
+    .for-panel.no-panel .for-panel-tag {
+      color: #c05050;
+      border: 1px solid rgba(224,90,90,0.2);
+      background: rgba(224,90,90,0.04);
+    }
+
+    .for-panel h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .for-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .for-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .for-list li .icon {
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      margin-top: 1px;
+    }
+
+    .for-panel.yes-panel .for-list li .icon { color: var(--gold-dim); }
+    .for-panel.no-panel .for-list li .icon { color: #c05050; }
+
+    /* ── FOUNDER SECTION ── */
+    .founder-section {
+      padding: 8rem 5vw;
+      background: var(--black);
+    }
+
+    .founder-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .founder-card {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 5rem;
+      align-items: start;
+      padding: 4rem;
+      border: 1px solid var(--border-dim);
+      background: var(--void);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .founder-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--gold-dim), transparent);
+    }
+
+    .founder-avatar-wrap {
+      position: relative;
+    }
+
+    .founder-avatar {
+      width: 220px; height: 260px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .founder-avatar-placeholder {
+      font-family: var(--serif);
+      font-size: 5rem;
+      font-weight: 600;
+      color: var(--gold-dim);
+      opacity: 0.4;
+    }
+
+    .founder-avatar::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to top, var(--void), transparent);
+    }
+
+    .founder-tag {
+      position: absolute;
+      bottom: -1px; left: -1px;
+      right: -1px;
+      padding: 0.6rem 1rem;
+      background: var(--void);
+      border: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      text-align: center;
+    }
+
+    .founder-content h3 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .founder-role {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 2rem;
+    }
+
+    .founder-content p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    .founder-content p:first-of-type {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    .founder-values {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .founder-value {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: var(--gold-faint);
+    }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      padding: 10rem 5vw;
+      background: var(--void);
+      border-top: 1px solid var(--border-dim);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .final-cta-inner {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .final-cta-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .final-cta-title em { font-style: italic; color: var(--gold); }
+
+    .final-cta-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      padding: 1rem 2.4rem;
+      text-decoration: none;
+      transition: all 0.4s var(--ease-luxury);
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-primary::after { content: '→'; transition: transform 0.3s; }
+    .btn-primary:hover { background: #e0bc5a; box-shadow: 0 0 40px rgba(201,168,76,0.4); }
+    .btn-primary:hover::after { transform: translateX(4px); }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.4s var(--ease-luxury);
+    }
+
+    .btn-ghost:hover { border-color: var(--gold); background: var(--gold-faint); }
+
+    .cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border-dim);
+      padding: 3rem 5vw;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--gold-dim);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--gold-dim); }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s var(--ease-luxury), transform 0.9s var(--ease-luxury);
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .page-header-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .philosophy-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .philosophy-left { position: static; }
+      .why-grid { grid-template-columns: 1fr; }
+      .for-grid { grid-template-columns: 1fr; }
+      .founder-card { grid-template-columns: 1fr; gap: 3rem; }
+      .founder-avatar { width: 160px; height: 200px; }
+      nav .nav-links { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .approach-row,
+      .approach-row-header { grid-template-columns: 1fr; }
+      .approach-item,
+      .approach-col { border-right: none; border-bottom: 1px solid var(--border-dim); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="nav-logo">CoreV<span>/ Trading Academy</span></a>
+  <ul class="nav-links">
+    <li><a href="/courses/">Courses</a></li>
+    <li><a href="/about/" class="active">About</a></li>
+    {% if user.is_authenticated %}
+      <li><a href="/dashboard/">Dashboard</a></li>
+    {% endif %}
+  </ul>
+  {% if user.is_authenticated %}
+    <a href="/dashboard/" class="nav-cta">My Dashboard</a>
+  {% else %}
+    <a href="/register/" class="nav-cta">Start Learning</a>
+  {% endif %}
+</nav>
+
+
+<!-- ── PAGE HEADER ── -->
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-glow"></div>
+  <div class="page-header-inner">
+    <div class="page-header-left">
+      <div class="page-eyebrow">About CoreV</div>
+      <h1 class="page-title">
+        Built on<br>
+        <em>First Principles.</em>
+      </h1>
+    </div>
+    <div class="page-header-right">
+      <p>
+        CoreV was built from a simple frustration: trading education was broken.
+        Not in the way people usually say — broken at a fundamental level.
+        We set out to fix that with a system, not a course library.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── PHILOSOPHY ── -->
+<section class="philosophy">
+  <div class="philosophy-inner">
+    <div class="philosophy-left reveal">
+      <div class="section-label">Brand Philosophy</div>
+      <h2 class="section-title">Why we think<br>the way we do</h2>
+    </div>
+    <div class="philosophy-body">
+      <p class="reveal">
+        The market doesn't reward effort. It doesn't reward screen time, indicator collections,
+        or volume of trades. It rewards clarity — the ability to read structure, manage risk,
+        and make decisions without hesitation.
+      </p>
+      <p class="reveal">
+        <strong>Most trading education teaches tools.</strong> CoreV teaches thinking.
+        Every module in our curriculum is built around a mental model — a way of approaching
+        price, time, and risk that remains relevant regardless of market conditions or instruments.
+      </p>
+
+      <div class="pull-quote reveal">
+        <p>
+          "The goal isn't to give traders more information.
+          It's to give them fewer, better decisions."
+        </p>
+      </div>
+
+      <p class="reveal">
+        We believe that <strong>consistency is a systems problem, not a psychology problem.</strong>
+        When traders act inconsistently, it's usually because they lack a clear framework —
+        not because they lack discipline. Build the system first. The discipline follows.
+      </p>
+      <p class="reveal">
+        This is why CoreV is structured the way it is. Not a library of unrelated tutorials.
+        A sequenced system where each concept builds on the last — and where the end result
+        is a trader who knows <em>exactly</em> why they're in a trade before they enter it.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── WHY COREV EXISTS ── -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="section-label reveal">The Origin</div>
+    <h2 class="section-title reveal">Why CoreV <em>exists</em></h2>
+
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-card-num">01</div>
+        <h4>The industry was selling the wrong thing</h4>
+        <p>
+          Signals, alerts, "scalping secrets", 90% win-rate systems.
+          None of it translates to real performance.
+          The education space was optimized for sales, not outcomes.
+        </p>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-card-num">02</div>
+        <h4>Good content existed — but was scattered</h4>
+        <p>
+          Serious knowledge was locked in books, academic research, and institutional
+          training programs. Retail traders had no structured path to access it.
+        </p>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-card-num">03</div>
+        <h4>Structure creates outcomes. Fragments don't.</h4>
+        <p>
+          Even committed learners were piecing together conflicting information
+          from YouTube, forums, and random courses — with no coherent progression.
+          We built the progression.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── NO-BS APPROACH TABLE ── -->
+<section class="approach-section">
+  <div class="approach-inner">
+    <div class="section-label reveal">Our Approach</div>
+    <h2 class="section-title reveal">No-BS. No hype.<br><em>No shortcuts.</em></h2>
+
+    <div class="approach-table reveal">
+      <div class="approach-row-header">
+        <div class="approach-col">
+          <span class="approach-col-header not">What we don't teach</span>
+        </div>
+        <div class="approach-col">
+          <span class="approach-col-header yes">What CoreV teaches</span>
+        </div>
+      </div>
+      <div class="approach-row">
+        <div class="approach-item not"><span class="dot"></span>Hot tip trading & signal groups</div>
+        <div class="approach-item yes"><span class="dot"></span>Structural market analysis from scratch</div>
+      </div>
+      <div class="approach-row">
+        <div class="approach-item not"><span class="dot"></span>"This one pattern always works"</div>
+        <div class="approach-item yes"><span class="dot"></span>Context-driven decision frameworks</div>
+      </div>
+      <div class="approach-row">
+        <div class="approach-item not"><span class="dot"></span>100 indicators stacked on a chart</div>
+        <div class="approach-item yes"><span class="dot"></span>Price, volume, and structure — clean</div>
+      </div>
+      <div class="approach-row">
+        <div class="approach-item not"><span class="dot"></span>Get-rich-quick positioning</div>
+        <div class="approach-item yes"><span class="dot"></span>Compounding a small edge over time</div>
+      </div>
+      <div class="approach-row">
+        <div class="approach-item not"><span class="dot"></span>Risk management as an afterthought</div>
+        <div class="approach-item yes"><span class="dot"></span>Risk as the foundation of every trade</div>
+      </div>
+      <div class="approach-row">
+        <div class="approach-item not"><span class="dot"></span>Copy-trading without understanding</div>
+        <div class="approach-item yes"><span class="dot"></span>Independent analysis capability</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── WHO IT'S FOR ── -->
+<section class="for-section">
+  <div class="for-inner">
+    <div class="section-label reveal">Fit Check</div>
+    <h2 class="section-title reveal">Who this is <em>built for</em></h2>
+
+    <div class="for-grid">
+      <div class="for-panel yes-panel reveal">
+        <span class="for-panel-tag">CoreV is for you if</span>
+        <h3>You're serious about the craft</h3>
+        <ul class="for-list">
+          <li><span class="icon">✓</span> You want to understand markets — not just profit from them randomly</li>
+          <li><span class="icon">✓</span> You're willing to slow down and build foundations right</li>
+          <li><span class="icon">✓</span> You've tried other courses but something always felt incomplete</li>
+          <li><span class="icon">✓</span> You want a process you can repeat — not setups to memorize</li>
+          <li><span class="icon">✓</span> You're a beginner who wants to start correctly, or an intermediate trader rebuilding</li>
+          <li><span class="icon">✓</span> You treat your trading capital with the seriousness it deserves</li>
+        </ul>
+      </div>
+      <div class="for-panel no-panel reveal reveal-delay-1">
+        <span class="for-panel-tag">CoreV is not for you if</span>
+        <h3>You want shortcuts</h3>
+        <ul class="for-list">
+          <li><span class="icon">✕</span> You're looking for signals, tips, or copy-trade alerts</li>
+          <li><span class="icon">✕</span> You expect results in days or weeks without effort</li>
+          <li><span class="icon">✕</span> You want entertainment, not education</li>
+          <li><span class="icon">✕</span> You're not willing to do the deliberate practice</li>
+          <li><span class="icon">✕</span> You believe there's a secret that successful traders are hiding</li>
+          <li><span class="icon">✕</span> You're gambling with money you cannot afford to lose</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOUNDER ── -->
+<section class="founder-section">
+  <div class="founder-inner">
+    <div class="section-label reveal">The Founder</div>
+    <h2 class="section-title reveal">A <em>practitioner-first</em><br>approach to education</h2>
+
+    <div class="founder-card reveal" style="margin-top: 3rem;">
+      <div class="founder-avatar-wrap">
+        <div class="founder-avatar">
+          <span class="founder-avatar-placeholder">C</span>
+        </div>
+        <div class="founder-tag">Founder & Lead Instructor</div>
+      </div>
+      <div class="founder-content">
+        <h3>The CoreV Founder</h3>
+        <div class="founder-role">Trader · Educator · Curriculum Designer</div>
+
+        <p>
+          CoreV was built by someone who went through the same cycle most traders know too well —
+          excitement, losses, frustration, and the slow realization that the problem
+          wasn't effort, it was system.
+        </p>
+        <p>
+          After years of active trading across equity and derivatives markets,
+          and an equal number of years watching talented people fail because they were
+          taught the wrong things in the wrong order — the decision to build CoreV was straightforward.
+        </p>
+        <p>
+          Every module in the curriculum has been stress-tested against real markets and real students.
+          Nothing in the system is theoretical — it's been pressure-tested in conditions
+          where it actually matters.
+        </p>
+        <p>
+          The mission is simple: <strong>give serious traders the structured education
+          that professional trading desks have always had — accessible, rigorous, and honest.</strong>
+        </p>
+
+        <div class="founder-values">
+          <span class="founder-value">Active Trader</span>
+          <span class="founder-value">Systems Thinker</span>
+          <span class="founder-value">Risk First</span>
+          <span class="founder-value">No Fluff</span>
+          <span class="founder-value">Practitioner-Led</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FINAL CTA ── -->
+<div class="final-cta">
+  <div class="final-cta-inner">
+    <div class="section-label reveal" style="justify-content:center;">Join the System</div>
+    <h2 class="final-cta-title reveal">
+      Ready to trade with a<br>
+      <em>real framework?</em>
+    </h2>
+    <p class="final-cta-sub reveal">
+      Explore the CoreV curriculum. Built for traders who want to operate with clarity,
+      not hope.
+    </p>
+    <div class="cta-group reveal">
+      {% if user.is_authenticated %}
+        <a href="/courses/" class="btn-primary">Browse Courses</a>
+        <a href="/dashboard/" class="btn-ghost">My Dashboard</a>
+      {% else %}
+        <a href="/courses/" class="btn-primary">Explore Courses</a>
+        <a href="/register/" class="btn-ghost">Create Account</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">CoreV</a>
+    <ul class="footer-links">
+      <li><a href="/courses/">Courses</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      {% if user.is_authenticated %}
+        <li><a href="/dashboard/">Dashboard</a></li>
+        <li><a href="/logout/">Logout</a></li>
+      {% else %}
+        <li><a href="/login/">Login</a></li>
+        <li><a href="/register/">Register</a></li>
+      {% endif %}
+    </ul>
+    <span class="footer-copy">© {% now "Y" %} CoreV. All rights reserved.</span>
+  </div>
+</footer>
+
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 60
+      ? 'rgba(201,168,76,0.14)'
+      : 'rgba(201,168,76,0.04)';
+  }, { passive: true });
+</script>
+
+</body>
+</html>

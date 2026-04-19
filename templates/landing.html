@@ -1,0 +1,1479 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoreV — Master the Markets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:       #03040a;
+      --void:        #06080f;
+      --surface:     #0b0d16;
+      --surface2:    #10131f;
+      --gold:        #c9a84c;
+      --gold-dim:    #9a7d35;
+      --gold-faint:  rgba(201,168,76,0.07);
+      --gold-glow:   rgba(201,168,76,0.18);
+      --teal:        #2dd4bf;
+      --teal-dim:    rgba(45,212,191,0.12);
+      --text:        #e8e4d9;
+      --text-muted:  #7a7565;
+      --text-faint:  #3a3830;
+      --border:      rgba(201,168,76,0.12);
+      --border-dim:  rgba(201,168,76,0.06);
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', sans-serif;
+      --mono:        'Space Mono', monospace;
+      --ease-luxury: cubic-bezier(0.25, 0.1, 0.0, 1.0);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 5vw;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-dim);
+      background: rgba(3,4,10,0.82);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-left: 0.4rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s var(--ease-luxury);
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      padding: 0.55rem 1.4rem;
+      text-decoration: none;
+      transition: all 0.3s var(--ease-luxury);
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+
+    .nav-cta:hover {
+      background: #e0bc5a;
+      box-shadow: 0 0 24px rgba(201,168,76,0.35);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 5vw 80px;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    .hero-glow-left {
+      position: absolute;
+      top: 20%; left: -10%;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-glow-right {
+      position: absolute;
+      bottom: 10%; right: -15%;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,212,191,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      max-width: 860px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s var(--ease-luxury) 0.3s forwards;
+    }
+
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim));
+    }
+    .hero-eyebrow::after { transform: scaleX(-1); }
+
+    .hero-headline {
+      font-family: var(--serif);
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      font-weight: 600;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 0.2em;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1.2s var(--ease-luxury) 0.5s forwards;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-subline {
+      font-family: var(--sans);
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 2rem auto 3rem;
+      opacity: 0;
+      transform: translateY(25px);
+      animation: fadeUp 1.1s var(--ease-luxury) 0.8s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s var(--ease-luxury) 1.1s forwards;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      padding: 1rem 2.4rem;
+      text-decoration: none;
+      position: relative;
+      transition: all 0.4s var(--ease-luxury);
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-primary::after {
+      content: '→';
+      transition: transform 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: #e0bc5a;
+      box-shadow: 0 0 40px rgba(201,168,76,0.4), 0 0 80px rgba(201,168,76,0.15);
+    }
+
+    .btn-primary:hover::after { transform: translateX(4px); }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.4s var(--ease-luxury);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      background: var(--gold-faint);
+      box-shadow: 0 0 20px var(--gold-glow);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards;
+    }
+
+    .hero-scroll span {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--text-faint);
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--gold-dim), transparent);
+      animation: scrollPulse 2.5s ease infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* ── CREDIBILITY STRIP ── */
+    .cred-strip {
+      border-top: 1px solid var(--border-dim);
+      border-bottom: 1px solid var(--border-dim);
+      background: var(--void);
+      padding: 3.5rem 5vw;
+      overflow: hidden;
+    }
+
+    .cred-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .cred-stat {
+      padding: 2rem 2.5rem;
+      border-right: 1px solid var(--border-dim);
+      text-align: center;
+      position: relative;
+    }
+
+    .cred-stat:last-child { border-right: none; }
+
+    .cred-stat-num {
+      font-family: var(--serif);
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .cred-stat-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .cred-stat-sub {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      margin-top: 0.3rem;
+    }
+
+    /* ── SECTION LAYOUT ── */
+    .section {
+      padding: 8rem 5vw;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-full {
+      padding: 8rem 5vw;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 40px;
+      height: 1px;
+      background: var(--gold-dim);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* ── PROBLEM / SOLUTION ── */
+    .problem-solution {
+      background: var(--void);
+      border-top: 1px solid var(--border-dim);
+      border-bottom: 1px solid var(--border-dim);
+    }
+
+    .ps-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8rem 5vw;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .ps-col-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      padding: 0.4rem 0.9rem;
+      display: inline-block;
+    }
+
+    .ps-col-label.problem {
+      color: #e05a5a;
+      border: 1px solid rgba(224,90,90,0.2);
+      background: rgba(224,90,90,0.04);
+    }
+
+    .ps-col-label.solution {
+      color: var(--gold);
+      border: 1px solid var(--border);
+      background: var(--gold-faint);
+    }
+
+    .ps-col h3 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .ps-col p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .ps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .ps-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .ps-list li .icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ps-list.problem-list li .icon { color: #e05a5a; }
+    .ps-list.solution-list li .icon { color: var(--gold); }
+
+    /* ── COURSES ── */
+    .courses-section { background: var(--black); }
+
+    .courses-header {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8rem 5vw 4rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .courses-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 5vw 8rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5px;
+    }
+
+    .course-card {
+      background: var(--void);
+      border: 1px solid var(--border-dim);
+      padding: 2.5rem;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.4s var(--ease-luxury);
+      overflow: hidden;
+      group: true;
+    }
+
+    .course-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold-faint) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s var(--ease-luxury);
+    }
+
+    .course-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s var(--ease-luxury);
+    }
+
+    .course-card:hover {
+      border-color: rgba(201,168,76,0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px var(--gold-glow);
+    }
+
+    .course-card:hover::before,
+    .course-card:hover::after { opacity: 1; }
+
+    .course-tag {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 1.5rem;
+    }
+
+    .course-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .course-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 2rem;
+    }
+
+    .course-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-dim);
+    }
+
+    .course-price {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .course-price span {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-left: 0.3rem;
+    }
+
+    .course-arrow {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: all 0.3s var(--ease-luxury);
+      clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+    }
+
+    .course-card:hover .course-arrow {
+      border-color: var(--gold);
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    .course-level {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.6rem;
+      background: var(--gold-faint);
+      border: 1px solid var(--border);
+      color: var(--gold-dim);
+    }
+
+    /* ── SYSTEM SECTION ── */
+    .system-section {
+      background: var(--void);
+      border-top: 1px solid var(--border-dim);
+      border-bottom: 1px solid var(--border-dim);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .system-section::before {
+      content: 'SYSTEM';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--serif);
+      font-size: 22vw;
+      font-weight: 700;
+      color: rgba(201,168,76,0.02);
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .system-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8rem 5vw;
+      position: relative;
+    }
+
+    .system-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      margin-top: 5rem;
+    }
+
+    .system-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .system-step {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 1.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-dim);
+      position: relative;
+    }
+
+    .system-step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--gold-faint);
+      line-height: 1;
+      padding-top: 0.1rem;
+      background: linear-gradient(180deg, var(--gold-dim), transparent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: none;
+    }
+
+    .step-content h4 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .step-content p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .system-manifesto {
+      padding: 3.5rem;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 50%);
+      position: relative;
+    }
+
+    .system-manifesto::before {
+      content: '"';
+      font-family: var(--serif);
+      font-size: 8rem;
+      line-height: 0.6;
+      color: var(--gold-dim);
+      position: absolute;
+      top: 2rem; left: 2.5rem;
+    }
+
+    .system-manifesto blockquote {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--text);
+      padding-top: 3rem;
+    }
+
+    .system-manifesto cite {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      font-style: normal;
+      display: block;
+      margin-top: 1.5rem;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section {
+      background: var(--black);
+      padding: 8rem 5vw;
+    }
+
+    .testimonials-header {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+    }
+
+    .testimonials-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+    }
+
+    .testimonial-card {
+      background: var(--void);
+      border: 1px solid var(--border-dim);
+      padding: 2.5rem;
+      position: relative;
+      transition: border-color 0.3s var(--ease-luxury);
+    }
+
+    .testimonial-card:hover { border-color: rgba(201,168,76,0.2); }
+
+    .testi-stars {
+      color: var(--gold);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .testi-text {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-dim);
+    }
+
+    .testi-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--gold-faint);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold-dim);
+    }
+
+    .testi-name {
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text);
+      display: block;
+    }
+
+    .testi-role {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      padding: 10rem 5vw;
+      background: var(--void);
+      border-top: 1px solid var(--border-dim);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .final-cta-inner {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .final-cta-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .final-cta-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .final-cta-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .cta-trust {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      text-transform: uppercase;
+    }
+
+    .cta-trust-item::before {
+      content: '✓';
+      color: var(--gold-dim);
+      font-size: 0.7rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border-dim);
+      padding: 3rem 5vw;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--gold-dim);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--gold-dim); }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+    }
+
+    /* ── DIVIDER ── */
+    .gold-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0;
+    }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s var(--ease-luxury), transform 0.9s var(--ease-luxury);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .cred-inner { grid-template-columns: repeat(2, 1fr); }
+      .cred-stat:nth-child(2) { border-right: none; }
+      .ps-grid { grid-template-columns: 1fr; gap: 4rem; }
+      .system-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .courses-header { flex-direction: column; align-items: flex-start; }
+      nav .nav-links { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .cred-inner { grid-template-columns: 1fr 1fr; }
+      .courses-grid { grid-template-columns: 1fr; }
+    }
+
+  .logout-btn {
+    position: absolute;
+    left: 30px;
+    top: 20px;
+    padding: 8px 18px;
+    border: 1px solid rgba(212,175,55,0.5);
+    border-radius: 8px;
+    color: #d4af37;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.02);
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    color: #000;
+    background: #d4af37;
+    box-shadow: 0 0 20px rgba(212,175,55,0.5);
+}
+
+.navbar {
+    backdrop-filter: blur(10px);
+}
+
+.nav-contact-btn {
+    padding: 6px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(212,175,55,0.4);
+    color: #d4af37;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(212,175,55,0.05);
+    backdrop-filter: blur(6px);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* subtle glow line */
+.nav-contact-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    background: linear-gradient(120deg, transparent, rgba(212,175,55,0.3), transparent);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+/* hover */
+.nav-contact-btn:hover {
+    color: #000;
+    background: #d4af37;
+    box-shadow: 0 0 18px rgba(212,175,55,0.4);
+}
+
+.nav-contact-btn:hover::before {
+    opacity: 1;
+}
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+
+  <div class="nav-actions">
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="btn-gold-outline logout-btn">Logout</a>
+    {% endif %}
+</div>
+  <a href="/" class="nav-logo">CoreV<span>/ Trading Academy</span></a>
+  <ul class="nav-links">
+    <li><a href="/courses/">Courses</a></li>
+    <li><a href="/about/">About</a></li>
+    <li>
+    <a href="{% url 'contact' %}" class="nav-contact-btn">Contact</a>
+</li>
+
+    {% if user.is_authenticated %}
+      <li><a href="/dashboard/">Dashboard</a></li>
+    {% endif %}
+  </ul>
+  {% if user.is_authenticated %}
+    <a href="/dashboard/" class="nav-cta">My Dashboard</a>
+  {% else %}
+    <a href="/register/" class="nav-cta">Start Learning</a>
+  {% endif %}
+</nav>
+
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow-left"></div>
+  <div class="hero-glow-right"></div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Professional Trading Education</div>
+
+    <h1 class="hero-headline">
+      Stop Guessing.<br>
+      <em>Start Operating.</em>
+    </h1>
+
+    <p class="hero-subline">
+      CoreV is a structured trading education system built for serious learners.
+      No recycled YouTube theory. No hype. Just tested frameworks, sharp skills,
+      and a repeatable edge.
+    </p>
+
+    <div class="hero-actions">
+      <a href="/courses/" class="btn-primary">Explore Courses</a>
+      <a href="/about/" class="btn-ghost">Our Philosophy</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+
+<!-- ── CREDIBILITY STRIP ── -->
+<div class="cred-strip">
+  <div class="cred-inner">
+    <div class="cred-stat reveal">
+      <span class="cred-stat-num">2,400+</span>
+      <div class="cred-stat-label">Active Students</div>
+      <div class="cred-stat-sub">Across 40+ countries</div>
+    </div>
+    <div class="cred-stat reveal reveal-delay-1">
+      <span class="cred-stat-num">91%</span>
+      <div class="cred-stat-label">Completion Rate</div>
+      <div class="cred-stat-sub">Industry avg. is 13%</div>
+    </div>
+    <div class="cred-stat reveal reveal-delay-2">
+      <span class="cred-stat-num">7</span>
+      <div class="cred-stat-label">Core Modules</div>
+      <div class="cred-stat-sub">Structured curriculum</div>
+    </div>
+    <div class="cred-stat reveal reveal-delay-3">
+      <span class="cred-stat-num">4.9★</span>
+      <div class="cred-stat-label">Average Rating</div>
+      <div class="cred-stat-sub">From verified students</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── PROBLEM → SOLUTION ── -->
+<div class="problem-solution">
+  <div class="ps-grid">
+    <div class="ps-col reveal">
+      <span class="ps-col-label problem">The Problem</span>
+      <h3 style="color: var(--text);">Why most retail traders never get consistent</h3>
+      <p>The trading education industry is flooded with shortcuts, signal groups, and surface-level theory. None of it builds real capability.</p>
+      <ul class="ps-list problem-list">
+        <li><span class="icon">✕</span> Chasing setups with no structural understanding</li>
+        <li><span class="icon">✕</span> Learning in fragments — no coherent system</li>
+        <li><span class="icon">✕</span> Emotional decisions masquerading as analysis</li>
+        <li><span class="icon">✕</span> Courses that teach tools, not thinking</li>
+        <li><span class="icon">✕</span> No risk framework. No process. No edge.</li>
+      </ul>
+    </div>
+    <div class="ps-col reveal reveal-delay-2">
+      <span class="ps-col-label solution">The CoreV Way</span>
+      <h3 style="color: var(--text);">A system that builds genuine market understanding</h3>
+      <p>CoreV is built on the premise that consistent performance comes from structured thinking — not more indicators or more content.</p>
+      <ul class="ps-list solution-list">
+        <li><span class="icon">✓</span> Top-down market structure before any setup</li>
+        <li><span class="icon">✓</span> Repeatable decision frameworks, not patterns</li>
+        <li><span class="icon">✓</span> Risk-first position sizing built into every module</li>
+        <li><span class="icon">✓</span> Curriculum sequenced for progressive mastery</li>
+        <li><span class="icon">✓</span> Thinking tools, not trading signals</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── COURSES ── -->
+<div class="courses-section">
+  <div class="courses-header">
+    <div>
+      <div class="section-label">Curriculum</div>
+      <h2 class="section-title">The <em>Complete</em><br>Course Library</h2>
+    </div>
+    <a href="/courses/" class="btn-ghost" style="white-space: nowrap;">View All Courses</a>
+  </div>
+
+  <div class="courses-grid">
+    {% for course in courses %}
+    <a href="{{ course.get_absolute_url }}" class="course-card reveal">
+      <div class="course-tag">
+        {% if course.level %}{{ course.level }}{% else %}Core Module{% endif %}
+      </div>
+      <h3 class="course-title">{{ course.title }}</h3>
+      <p class="course-desc">
+        {% if course.short_description %}
+          {{ course.short_description }}
+        {% elif course.description %}
+          {{ course.description|truncatewords:20 }}
+        {% else %}
+          A structured module designed to build a specific trading skill within the CoreV system.
+        {% endif %}
+      </p>
+      <div class="course-meta">
+        <div>
+          {% if course.price %}
+            <div class="course-price">
+              ₹{{ course.price }}<span>one-time</span>
+            </div>
+          {% endif %}
+          {% if course.level %}
+            <div class="course-level" style="margin-top:0.6rem;">{{ course.level }}</div>
+          {% endif %}
+        </div>
+        <div class="course-arrow">→</div>
+      </div>
+    </a>
+    {% empty %}
+    <div class="course-card" style="grid-column: 1/-1; text-align:center; pointer-events:none; opacity:0.5;">
+      <p style="color: var(--text-muted); font-family: var(--mono); font-size:0.75rem; letter-spacing:0.1em;">
+        Courses launching soon — check back shortly.
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+<!-- ── SYSTEM NOT TUTORIALS ── -->
+<div class="system-section">
+  <div class="system-inner">
+    <div class="section-label reveal">Our Approach</div>
+    <h2 class="section-title reveal" style="max-width:600px;">
+      A <em>System</em> built for<br>the serious trader
+    </h2>
+
+    <div class="system-grid">
+      <div class="system-steps">
+        <div class="system-step reveal">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h4>Foundation First</h4>
+            <p>Every CoreV learner begins with market structure and price mechanics — the bedrock of everything else. No shortcuts through this phase.</p>
+          </div>
+        </div>
+        <div class="system-step reveal reveal-delay-1">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h4>Framework Over Patterns</h4>
+            <p>We teach you how to think about price, not what candle patterns to memorize. Adaptable mental models that work across instruments.</p>
+          </div>
+        </div>
+        <div class="system-step reveal reveal-delay-2">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h4>Risk is the Core Skill</h4>
+            <p>Position sizing, drawdown management, and probability thinking are woven through every module — not saved for one optional lecture.</p>
+          </div>
+        </div>
+        <div class="system-step reveal reveal-delay-3">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h4>Execution Under Pressure</h4>
+            <p>Real market scenarios, case studies, and decision-tree exercises prepare you to act with clarity — not hesitation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-manifesto reveal reveal-delay-2">
+        <blockquote>
+          "Retail trading fails at the system level, not the technique level.
+          CoreV was built to fix that — from the ground up."
+        </blockquote>
+        <cite>— CoreV Curriculum Design Principle</cite>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── TESTIMONIALS ── -->
+<div class="testimonials-section">
+  <div class="testimonials-header">
+    <div class="section-label">Student Results</div>
+    <h2 class="section-title">What serious learners<br><em>actually say</em></h2>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"This is the first course that made me understand the 'why' behind setups. The structure alone is worth ten times what I paid."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">R</div>
+        <div>
+          <span class="testi-name">Rahul M.</span>
+          <span class="testi-role">Equity Trader · Mumbai</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"I spent two years watching free content and going nowhere. CoreV gave me a framework in 6 weeks that actually holds up in live markets."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <span class="testi-name">Ankit S.</span>
+          <span class="testi-role">Futures Trader · Delhi</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The risk module alone changed how I operate. I stopped taking oversized positions driven by FOMO. That shift has been everything."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">P</div>
+        <div>
+          <span class="testi-name">Priya K.</span>
+          <span class="testi-role">Options Trader · Bangalore</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── FINAL CTA ── -->
+<div class="final-cta">
+  <div class="final-cta-inner">
+    <div class="section-label reveal" style="justify-content: center;">Take the First Step</div>
+    <h2 class="final-cta-title reveal">
+      Build the edge that<br><em>most traders never do.</em>
+    </h2>
+    <p class="final-cta-sub reveal">
+      Stop consuming. Start building. Enroll in a CoreV course today
+      and trade with a system behind every decision.
+    </p>
+    <div class="cta-group reveal">
+      {% if user.is_authenticated %}
+        <a href="/courses/" class="btn-primary">Continue Learning</a>
+        <a href="/dashboard/" class="btn-ghost">My Dashboard</a>
+      {% else %}
+        <a href="/register/" class="btn-primary">Create Free Account</a>
+        <a href="/courses/" class="btn-ghost">Browse Courses</a>
+      {% endif %}
+    </div>
+    <div class="cta-trust reveal">
+      <div class="cta-trust-item">Instant Access</div>
+      <div class="cta-trust-item">No Subscription</div>
+      <div class="cta-trust-item">Lifetime Course Access</div>
+      <div class="cta-trust-item">Structured Curriculum</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">CoreV</a>
+    <ul class="footer-links">
+      <li><a href="/courses/">Courses</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      {% if user.is_authenticated %}
+        <li><a href="/dashboard/">Dashboard</a></li>
+        <li><a href="/logout/">Logout</a></li>
+      {% else %}
+        <li><a href="/login/">Login</a></li>
+        <li><a href="/register/">Register</a></li>
+      {% endif %}
+    </ul>
+    <span class="footer-copy">© {% now "Y" %} CoreV. All rights reserved.</span>
+  </div>
+</footer>
+
+
+<script>
+  // ── REVEAL ON SCROLL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── NAV SCROLL SHADOW ──
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 60
+      ? 'rgba(201,168,76,0.12)'
+      : 'rgba(201,168,76,0.04)';
+  }, { passive: true });
+
+  // ── COURSE CARD PARALLAX GLOW ──
+  document.querySelectorAll('.course-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(201,168,76,0.05) 0%, #06080f 60%)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.background = '';
+    });
+  });
+
+  // ── STAT COUNTER ANIMATION ──
+  function animateCounter(el) {
+    const text = el.textContent;
+    const numMatch = text.match(/[\d,]+/);
+    if (!numMatch) return;
+    const raw = parseInt(numMatch[0].replace(',',''));
+    const suffix = text.replace(numMatch[0], '');
+    const prefix = text.substring(0, text.indexOf(numMatch[0]));
+    let start = 0;
+    const duration = 1400;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(eased * raw);
+      el.textContent = prefix + current.toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const credObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.cred-stat-num').forEach(animateCounter);
+        credObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.cred-strip').forEach(el => credObserver.observe(el));
+</script>
+
+</body>
+</html>

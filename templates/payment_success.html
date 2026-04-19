@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Successful — CoreV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-void:      #03040a;
+  --bg-card:      #0f1320;
+  --bg-card2:     #131828;
+  --gold:         #c9a84c;
+  --gold-light:   #e8c96a;
+  --gold-dim:     rgba(201,168,76,0.10);
+  --gold-border:  rgba(201,168,76,0.18);
+  --teal:         #1ecbe1;
+  --text:         #f0ece3;
+  --text-2:       #a89f90;
+  --text-muted:   #5a5248;
+  --border:       rgba(201,168,76,0.12);
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;background:var(--bg-void);color:var(--text);font-family:var(--font-body);}
+
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 20%, rgba(201,168,76,0.06) 0%, transparent 65%);
+}
+body::after {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+  background-size:48px 48px;
+}
+
+nav {
+  position:relative; z-index:10;
+  display:flex; align-items:center; padding:20px 60px;
+  border-bottom:1px solid var(--border);
+  background:rgba(3,4,10,0.88); backdrop-filter:blur(20px);
+}
+.nav-logo {
+  font-family:var(--font-display); font-size:1.5rem; font-weight:700;
+  color:var(--gold); letter-spacing:.08em; text-decoration:none;
+}
+
+.page {
+  position:relative; z-index:1;
+  min-height:calc(100vh - 65px);
+  display:flex; align-items:center; justify-content:center;
+  padding:40px 24px;
+}
+
+.card {
+  background:linear-gradient(145deg, var(--bg-card), var(--bg-card2));
+  border:1px solid var(--gold-border);
+  border-radius:24px; padding:60px 52px;
+  max-width:520px; width:100%;
+  text-align:center; position:relative; overflow:hidden;
+  animation:cardIn .6s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes cardIn { from{opacity:0;transform:translateY(28px) scale(.97)} to{opacity:1;transform:none} }
+
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  animation:glow 3s ease-in-out infinite;
+}
+@keyframes glow { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+.card::after {
+  content:''; position:absolute; inset:-1px; border-radius:24px;
+  background:radial-gradient(ellipse 80% 40% at 50% 0%, rgba(201,168,76,0.05) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+/* ICON */
+.icon-wrap { width:90px; height:90px; margin:0 auto 36px; }
+.icon-ring {
+  width:90px; height:90px; border-radius:50%;
+  background:rgba(201,168,76,0.08);
+  border:1px solid rgba(201,168,76,0.25);
+  display:flex; align-items:center; justify-content:center;
+  animation:ringIn .5s .3s cubic-bezier(.22,1,.36,1) both, ringGlow 2.5s .8s ease-in-out infinite;
+}
+@keyframes ringIn { from{transform:scale(.4);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes ringGlow { 0%,100%{box-shadow:0 0 20px rgba(201,168,76,0.15)} 50%{box-shadow:0 0 48px rgba(201,168,76,0.4)} }
+
+.icon-check { width:40px; height:40px; animation:checkIn .4s .6s ease both; }
+@keyframes checkIn { from{opacity:0;transform:scale(.5) rotate(-15deg)} to{opacity:1;transform:none} }
+.check-path { stroke-dasharray:36; stroke-dashoffset:36; animation:drawCheck .5s .7s ease forwards; }
+@keyframes drawCheck { to{stroke-dashoffset:0} }
+
+/* BADGE */
+.badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 16px;
+  background:var(--gold-dim); border:1px solid var(--gold-border);
+  border-radius:100px;
+  font-family:var(--font-mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:16px;
+  animation:fadeUp .5s .4s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+
+h1 {
+  font-family:var(--font-display); font-size:2.4rem; font-weight:700;
+  letter-spacing:-.02em; margin-bottom:12px;
+  animation:fadeUp .5s .5s ease both;
+}
+.subtitle {
+  color:var(--text-2); font-size:.9rem; line-height:1.7;
+  margin-bottom:36px; animation:fadeUp .5s .55s ease both;
+}
+
+/* COURSE BOX */
+.course-box {
+  background:rgba(255,255,255,0.03); border:1px solid var(--gold-border);
+  border-radius:14px; padding:20px 24px;
+  margin-bottom:32px; text-align:left;
+  animation:fadeUp .5s .6s ease both;
+}
+.course-box-label {
+  font-family:var(--font-mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-muted); margin-bottom:6px;
+}
+.course-box-name {
+  font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--text);
+}
+.course-box-access { font-size:.78rem; color:var(--gold); margin-top:4px; }
+
+/* BUTTONS */
+.btn-group { display:flex; flex-direction:column; gap:12px; animation:fadeUp .5s .65s ease both; }
+
+.btn-primary {
+  display:block; width:100%; padding:16px;
+  background:linear-gradient(135deg, var(--gold), var(--gold-light));
+  color:#03040a; border:none; border-radius:12px;
+  font-family:var(--font-body); font-size:.92rem; font-weight:700;
+  letter-spacing:.04em; text-decoration:none; text-align:center;
+  position:relative; overflow:hidden;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 0 32px rgba(201,168,76,0.25);
+}
+.btn-primary::before {
+  content:''; position:absolute; top:0; left:-100%; width:60%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);
+  transition:left .5s;
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 52px rgba(201,168,76,0.5); }
+.btn-primary:hover::before { left:150%; }
+
+.btn-secondary {
+  display:block; width:100%; padding:15px;
+  background:transparent; color:var(--text);
+  border:1px solid var(--gold-border); border-radius:12px;
+  font-family:var(--font-body); font-size:.88rem; font-weight:500;
+  text-decoration:none; text-align:center;
+  transition:.2s;
+}
+.btn-secondary:hover { border-color:rgba(201,168,76,.35); color:var(--gold); background:var(--gold-dim); }
+
+.confetti-particle { position:fixed; border-radius:2px; opacity:0; pointer-events:none; z-index:999; }
+
+@media (max-width:600px) { nav{padding:16px 24px;} .card{padding:40px 24px;} h1{font-size:2rem;} }
+</style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">CoreV</a>
+  </nav>
+
+  <div class="page">
+    <div class="card">
+
+      <div class="icon-wrap">
+        <div class="icon-ring">
+          <svg class="icon-check" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="check-path" d="M10 21l8 8 14-14" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="badge">✦ Confirmed</div>
+      <h1>Enrollment Secured</h1>
+      <p class="subtitle">
+        Your payment is confirmed. You now have full lifetime<br>access to the course below.
+      </p>
+
+      <div class="course-box">
+        <p class="course-box-label">Enrolled in</p>
+        <p class="course-box-name">{{ course.title }}</p>
+        <p class="course-box-access">✓ Lifetime Access Unlocked</p>
+      </div>
+
+      <div class="btn-group">
+        <a href="{% url 'course_learn' course.slug %}" class="btn-primary">
+    Go to Course →
+</a>
+        <a href="{% url 'dashboard' %}" class="btn-secondary">Back to Dashboard</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    var colors=['#c9a84c','#e8c96a','#f0ece3','#1ecbe1','#ffffff'];
+    var count=60;
+    for(var i=0;i<count;i++){
+      (function(i){
+        setTimeout(function(){
+          var el=document.createElement('div');
+          el.className='confetti-particle';
+          el.style.left=(15+Math.random()*70)+'vw';
+          el.style.top='-10px';
+          el.style.background=colors[Math.floor(Math.random()*colors.length)];
+          el.style.width=(4+Math.random()*6)+'px';
+          el.style.height=(4+Math.random()*6)+'px';
+          el.style.borderRadius=Math.random()>.5?'50%':'2px';
+          document.body.appendChild(el);
+          var dur=1400+Math.random()*1000;
+          var x=(Math.random()-.5)*280;
+          var y=380+Math.random()*280;
+          el.animate([
+            {opacity:1,transform:'translate(0,0) rotate(0deg)'},
+            {opacity:0,transform:'translate('+x+'px,'+y+'px) rotate('+(Math.random()*720)+'deg)'}
+          ],{duration:dur,easing:'cubic-bezier(0.25,0.46,0.45,0.94)',fill:'forwards'})
+          .onfinish=function(){el.remove();};
+        },i*16);
+      })(i);
+    }
+  })();
+  </script>
+
+</body>
+</html>

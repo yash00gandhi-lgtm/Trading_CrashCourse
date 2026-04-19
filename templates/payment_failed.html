@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Failed — CoreV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-void:      #03040a;
+  --bg-card:      #0f1320;
+  --bg-card2:     #131828;
+  --gold:         #c9a84c;
+  --gold-light:   #e8c96a;
+  --gold-dim:     rgba(201,168,76,0.10);
+  --gold-border:  rgba(201,168,76,0.15);
+  --danger:       #e05252;
+  --danger-dim:   rgba(224,82,82,0.10);
+  --danger-border:rgba(224,82,82,0.25);
+  --text:         #f0ece3;
+  --text-2:       #a89f90;
+  --text-muted:   #5a5248;
+  --border:       rgba(201,168,76,0.12);
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;background:var(--bg-void);color:var(--text);font-family:var(--font-body);}
+
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 50% 25%, rgba(224,82,82,0.04) 0%, transparent 65%);
+}
+body::after {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.02) 1px, transparent 1px);
+  background-size:48px 48px;
+}
+
+nav {
+  position:relative; z-index:10;
+  display:flex; align-items:center; padding:20px 60px;
+  border-bottom:1px solid var(--border);
+  background:rgba(3,4,10,0.88); backdrop-filter:blur(20px);
+}
+.nav-logo {
+  font-family:var(--font-display); font-size:1.5rem; font-weight:700;
+  color:var(--gold); letter-spacing:.08em; text-decoration:none;
+}
+
+.page {
+  position:relative; z-index:1;
+  min-height:calc(100vh - 65px);
+  display:flex; align-items:center; justify-content:center;
+  padding:40px 24px;
+}
+
+.card {
+  background:linear-gradient(145deg, var(--bg-card), var(--bg-card2));
+  border:1px solid var(--gold-border);
+  border-radius:24px; padding:60px 52px;
+  max-width:520px; width:100%;
+  text-align:center; position:relative; overflow:hidden;
+  animation:cardIn .6s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes cardIn { from{opacity:0;transform:translateY(28px) scale(.97)} to{opacity:1;transform:none} }
+
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--danger), transparent);
+  opacity:.5;
+}
+
+/* ICON */
+.icon-wrap { width:90px; height:90px; margin:0 auto 36px; }
+.icon-ring {
+  width:90px; height:90px; border-radius:50%;
+  background:var(--danger-dim); border:1px solid var(--danger-border);
+  display:flex; align-items:center; justify-content:center;
+  animation:ringIn .5s .3s cubic-bezier(.22,1,.36,1) both, ringPulse 2.5s .8s ease-in-out infinite;
+}
+@keyframes ringIn { from{transform:scale(.4);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes ringPulse { 0%,100%{box-shadow:0 0 20px rgba(224,82,82,0.1)} 50%{box-shadow:0 0 44px rgba(224,82,82,0.3)} }
+
+.icon-x { width:36px; height:36px; animation:xIn .3s .65s ease both; }
+@keyframes xIn { from{opacity:0;transform:rotate(45deg) scale(.5)} to{opacity:1;transform:none} }
+.x-line-1,.x-line-2 { stroke-dasharray:24; stroke-dashoffset:24; }
+.x-line-1 { animation:drawLine .3s .7s ease forwards; }
+.x-line-2 { animation:drawLine .3s .85s ease forwards; }
+@keyframes drawLine { to{stroke-dashoffset:0} }
+
+/* BADGE */
+.badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 16px;
+  background:var(--danger-dim); border:1px solid var(--danger-border);
+  border-radius:100px;
+  font-family:var(--font-mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
+  color:#f08080; margin-bottom:16px;
+  animation:fadeUp .5s .4s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+
+h1 {
+  font-family:var(--font-display); font-size:2.4rem; font-weight:700;
+  letter-spacing:-.02em; margin-bottom:12px;
+  animation:fadeUp .5s .5s ease both;
+}
+.subtitle {
+  color:var(--text-2); font-size:.9rem; line-height:1.7;
+  margin-bottom:36px; animation:fadeUp .5s .55s ease both;
+}
+
+/* REASONS */
+.reasons-box {
+  background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);
+  border-radius:14px; padding:20px 24px;
+  margin-bottom:32px; text-align:left;
+  animation:fadeUp .5s .6s ease both;
+}
+.reasons-label {
+  font-family:var(--font-mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text-muted); margin-bottom:12px;
+}
+.reasons-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.reasons-list li {
+  display:flex; align-items:center; gap:10px;
+  font-size:.82rem; color:var(--text-2);
+}
+.reasons-list li::before {
+  content:''; width:5px; height:5px; border-radius:50%;
+  background:rgba(224,82,82,0.6); flex-shrink:0;
+}
+
+/* BUTTONS */
+.btn-group { display:flex; flex-direction:column; gap:12px; animation:fadeUp .5s .65s ease both; }
+
+.btn-retry {
+  display:block; width:100%; padding:16px;
+  background:linear-gradient(135deg, var(--gold), var(--gold-light));
+  color:#03040a; border:none; border-radius:12px;
+  font-family:var(--font-body); font-size:.92rem; font-weight:700;
+  letter-spacing:.04em; text-decoration:none; text-align:center;
+  position:relative; overflow:hidden;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 0 28px rgba(201,168,76,0.2);
+}
+.btn-retry::before {
+  content:''; position:absolute; top:0; left:-100%; width:60%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);
+  transition:left .5s;
+}
+.btn-retry:hover { transform:translateY(-2px); box-shadow:0 0 44px rgba(201,168,76,0.4); }
+.btn-retry:hover::before { left:150%; }
+
+.btn-back {
+  display:block; width:100%; padding:15px;
+  background:transparent; color:var(--text);
+  border:1px solid var(--gold-border); border-radius:12px;
+  font-family:var(--font-body); font-size:.88rem; font-weight:500;
+  text-decoration:none; text-align:center; transition:.2s;
+}
+.btn-back:hover { border-color:rgba(201,168,76,.3); color:var(--gold); background:var(--gold-dim); }
+
+.support-note {
+  margin-top:24px; font-size:.75rem; color:var(--text-muted);
+  animation:fadeUp .5s .7s ease both;
+}
+.support-note a { color:var(--gold); text-decoration:none; opacity:.8; transition:opacity .2s; }
+.support-note a:hover { opacity:1; }
+
+@media (max-width:600px) { nav{padding:16px 24px;} .card{padding:40px 24px;} h1{font-size:2rem;} }
+</style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">CoreV</a>
+  </nav>
+
+  <div class="page">
+    <div class="card">
+
+      <div class="icon-wrap">
+        <div class="icon-ring">
+          <svg class="icon-x" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="x-line-1" d="M10 10 L26 26" stroke="#e05252" stroke-width="2.5" stroke-linecap="round"/>
+            <path class="x-line-2" d="M26 10 L10 26" stroke="#e05252" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="badge">⚠ Transaction Failed</div>
+      <h1>Payment Declined</h1>
+      <p class="subtitle">
+        Something went wrong during processing.<br>
+        No amount has been debited from your account.
+      </p>
+
+      <div class="reasons-box">
+        <p class="reasons-label">Common Reasons</p>
+        <ul class="reasons-list">
+          <li>Insufficient funds or daily limit exceeded</li>
+          <li>Bank temporarily blocked the transaction</li>
+          <li>Incorrect card details or OTP entered</li>
+          <li>Network timeout during payment</li>
+          <li>UPI / wallet authorization declined</li>
+        </ul>
+      </div>
+
+      <div class="btn-group">
+        <a href="/" class="btn-retry">↻ Retry Payment</a>
+        <a href="javascript:history.back()" class="btn-back">← Go Back</a>
+      </div>
+
+      <p class="support-note">
+        Still facing issues? <a href="mailto:support@corev.in">Contact Support →</a>
+      </p>
+
+    </div>
+  </div>
+
+</body>
+</html>
